@@ -8,43 +8,31 @@ int main() {
     while(t-->0) {
         int n, m, q; cin >> n >> m >> q;
 
-        vector<int> positions(n+1, 0);
-        
-        // input teachers position
-        for (int i=0; i<m; i++) {
+        vector<int> positions(m);        
+        for (int i=0; i<m; i++) 
+            cin >> positions[i];
+        sort(positions.begin(), positions.end());
+
+        while(q-->0) {
             int pos; cin >> pos;
-            positions[pos] = 1;
-        }
 
-        // calculate leftMax and rightMin positions of teachers
-        vector<int> leftMax(n+1), rightMin(n+1);
-        int left = 0;
-        for (int i=1; i<=n; i++) {
-            if (positions[i] == 1) left = i;
-            leftMax[i] = left;
-        }
-        int right = n+1;
-        for (int i=n; i>0; i--) {
-            if (positions[i] == 1) right = i;
-            rightMin[i] = right;
-        }
-
-        while(q-- > 0) {
-
-            // input david's position
-            int pos; cin >> pos;
-            int i = leftMax[pos], j = rightMin[pos];
-
-            // if trapped in a corner
-            if (i == 0) {
-                cout << j-1;
-            } else if(j == n+1) {
-                cout << n - i;
-            } else {
-                cout << (j-i)/2;
+            // left corner
+            if (pos < positions[0]) {
+                cout << positions[0]-1 << endl;
+                continue;
             }
 
-            cout << endl;
+            // right corner
+            if (pos > positions[m-1]) {
+                cout << n - positions[m-1] << endl;
+                continue;
+            }
+
+            // in between
+            int k = lower_bound(positions.begin(), positions.end(), pos) - positions.begin();
+
+            cout << (positions[k] - positions[k-1]) /2 << endl;
         }
+        
     }
 }
