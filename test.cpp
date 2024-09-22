@@ -8,51 +8,24 @@ int main() {
     int t; cin >> t;
     while(t-->0) {
         
-        int n; cin >> n;
+        int n, d, k; cin >> n >> d >> k;
+        vector<int> l(k), r(k);
+        for (int i=0; i<k; i++) {
+            cin >> l[i] >> r[i];
+        }
+        
+        // apply prefix sum 
+        vector<int> psum(n+2, 0);
+        for (int i=0; i<k; i++) {
+            psum[l[i]]++;
+            psum[r[i]+1]--;
+        }   
 
-        string curr = "", prediction;
-        int response;
-
-        while(curr.length() < n) {
-
-            prediction = curr + "0";
-            cout << "? " << prediction << endl;
-            cout.flush();
-            cin >> response;
-
-            if (response == 1) {
-                curr = prediction;
-                continue;
-            }
-
-            prediction = curr + "1";
-            cout << "? " << prediction << endl;
-            cout.flush();
-            cin >> response;
-            if (response == 0) {
-                break;
-            }
-
-            curr = prediction;
+        for (int i=2; i<=n+1; i++) {
+            psum[i] += psum[i-1];
         }
 
-        // after reaching to end, try adding in begging of curr
-        while(curr.length() < n) {
-
-            prediction = "0" + curr;
-            cout << "? " << prediction << endl;
-            cout.flush();
-            cin >> response;
-
-            if (response == 1) {
-                curr = prediction;
-                continue;
-            }
-
-            curr = "1" + curr;
-        }
-
-        cout << "! " << curr << endl;
-        cout.flush();
+        // sliding window - find window with max maximum value
+        
     }
 }
