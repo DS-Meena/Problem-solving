@@ -1,5 +1,33 @@
 # Problem Journal
 
+## Codeforces Round 976
+
+## A. Find Minimum Operations 😱
+
+$n = n - K^x$ for any x>=0
+
+Find minimum operations required to make n equal to 0.
+
+**One Piece of Information 🧩**
+- Instead of doing k operations of x=0, a single operation x=1 will do the job.
+- Min operations = $O(log_kn)$
+
+## Codeforces Round 975
+
+## All Pairs Segments
+
+**One Piece of information 🧩**
+- Using formula calculate, in how many intervals does point p lies.
+
+$x_{i+1} - x_i - 1$ points contained in exactly $i(n-i)$ intervals (becaue there are i possible left endpoints and n-i possible right endpoints).
+
+Similarly, point $p=x_i$ is contained in $i(n-i+1)-1$ intervals (remove interval $[x_i, x_i]$).
+
+## Max Plus Size
+
+**One Piece of Information 🧩**
+- There are two ways of coloring, start red at 0 or at 1.
+
 ## Codeforces Round 974
 
 ## Renez-vous de Marin et Robin 🐎
