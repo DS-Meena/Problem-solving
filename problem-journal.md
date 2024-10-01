@@ -2,6 +2,20 @@
 
 ## Codeforces Round 976
 
+## B. Brightness Begins 💡
+
+Initiall all bulbs are on. The final state of ith bulb depends on the number of divisors of i.
+- On -> even number of divisors -> not perfect square
+- off -> odd number of divisors -> perfect square
+
+**One Piece of Information 🧩**
+- Perfect square has an odd number of divisors (off).
+
+It becomes, find kth number which is not a perfect square (on)? Binary search can be used.
+
+$n - off == k => n - sqrt(n) == k$
+
+
 ## A. Find Minimum Operations 😱
 
 $n = n - K^x$ for any x>=0
