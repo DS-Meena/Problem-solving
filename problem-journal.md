@@ -1,5 +1,37 @@
 # Problem Journal
 
+## Brute force, Math, Implementation (1000-1200)
+
+## B. Collatz Conjecture 🥸
+
+variable - x, constant y.
+
+An operation is performed k times:
+- x++
+- while(x%y == 0) x /= y
+
+Find final value of x?
+
+----------------------------------------
+
+1. If brute force was allowed, then just implement.
+2. Using some optimization find the final value.
+
+If x becomes 1:
+ans = 1 + rem % (y-1)
+
+**One Piece of Infomation 🧩**
+- After x becomes 1, it follows the same sequence to y.
+- To make x divisible by y, add $y - (x \mod y)$ to x.
+
+**Mistake**
+- Wrong inference, that once start dividing it will end < y.
+
+## B. Three Brothers (800)
+
+**One Piece of information 🧩**
+- Only 3 options are there.
+
 ## Codeforces Round 976
 
 ## B. Brightness Begins 💡

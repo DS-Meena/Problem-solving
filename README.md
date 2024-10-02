@@ -9,6 +9,9 @@ $sum = \frac{len}{2} * (\text{first term} + \text{last term})$
 
 ## Number Theory 
 
+To make x % y == 0, we need to add following value to x:
+`amount_to_add = (y - (x % y)) % y`
+
 ## Divisors ➗➗
 
 ### Number of divisors 🤿🤿
