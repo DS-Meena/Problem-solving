@@ -2,7 +2,38 @@
 
 ## Brute force, Math, Implementation (1000-1200)
 
-## B. Collatz Conjecture 🥸
+### C. Turtle Fingers: Count the Values of k 🖐️
+
+Given 3 positive intergers: a, b, l. We can always find, k, x and y such that $l = k . a^x . b^y$
+
+Find the number of distinct possible values of k?
+
+----
+
+**One Piece of information 🧩**
+- The number of distinct values of k, depends on the combination of x and y.
+- (a^x . b^y) should be divisor of l.
+
+**Approach 👏**
+1. Iterate over all possible values of x and y.
+2. If $a^x . b^y$ is a divisor of l. Insert into set.
+3. return size of set.
+
+```cpp
+// The other way
+// Iterate over possible values of a^x and b^y
+for(ll i = 1; i<=l; i*=a){
+    for(ll j=1; j*i<=l; j*=b){
+        if((l%(i*j))==0){    // overall it should divide l
+            s.insert(l/(i*j));
+        }
+    }
+}
+```
+
+
+
+### B. Collatz Conjecture 🥸
 
 variable - x, constant y.
 
@@ -27,14 +58,14 @@ ans = 1 + rem % (y-1)
 **Mistake**
 - Wrong inference, that once start dividing it will end < y.
 
-## B. Three Brothers (800)
+### B. Three Brothers (800)
 
 **One Piece of information 🧩**
 - Only 3 options are there.
 
 ## Codeforces Round 976
 
-## B. Brightness Begins 💡
+### B. Brightness Begins 💡
 
 Initiall all bulbs are on. The final state of ith bulb depends on the number of divisors of i.
 - On -> even number of divisors -> not perfect square
