@@ -2,6 +2,11 @@
 
 ## Brute force, Math, Implementation (1000-1200)
 
+### C. Premutation 🦋
+
+**One piece of information 🧩**
+- Every column has some rank associated with it. First comers (column wise) are values more.
+
 ### C. Turtle Fingers: Count the Values of k 🖐️
 
 Given 3 positive intergers: a, b, l. We can always find, k, x and y such that $l = k . a^x . b^y$

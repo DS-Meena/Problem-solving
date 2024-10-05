@@ -8,21 +8,28 @@ int main() {
     int t; cin >> t;
     while(t-->0) {
 
-        ll a, b, l; 
-        cin >> a >> b >> l;
+        int n; cin >> n;
 
-        set<ll> myset;
+        vector<vector<int>> seq(n, vector<int>(n-1));
 
-        for (ll x=0; x<30; x++) {
-            for (ll y=0; y<30 && pow(a, x) * pow(b, y) <= l; y++) {
+        for (int i=0; i<n; i++) 
+            for (int j=0; j<n-1; j++) 
+                cin >> seq[i][j];
 
-                ll prod = pow(a, x) * pow(b, y);
-                if (l % prod == 0) {
-                    myset.insert(l/prod);
-                }
+        unordered_map<int, int> freq;
+        for (int i=0; i<n-1; i++) {
+            for (int j=0; j<n; j++) {
+                freq[seq[j][i]] += n-i;
             }
         }
 
-        cout << myset.size() << endl;
+        vector<pair<int, int>> ans(n+1);
+        for (int i=1; i<=n; i++)
+            ans[i] = {freq[i], i};
+        sort(ans.begin(), ans.end());
+
+        for (int i=n; i>=1; i--)
+            cout << ans[i].second << " ";
+        cout << endl;
     }
 }
