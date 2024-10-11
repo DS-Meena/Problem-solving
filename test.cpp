@@ -2,34 +2,47 @@
     
 using namespace std;
 #define ll long long
+#define p pair<int, int>
 
 int main() {
     
     int t; cin >> t;
     while(t-->0) {
 
-        int n; cin >> n;
+        int n, k; 
+        cin >> n >> k;
 
-        vector<vector<int>> seq(n, vector<int>(n-1));
+        vector<p> monsters(n);
+        for (int i=0; i<n; i++) cin >> monsters[i].second;
+        for (int i=0; i<n; i++) cin >> monsters[i].first;
 
-        for (int i=0; i<n; i++) 
-            for (int j=0; j<n-1; j++) 
-                cin >> seq[i][j];
+        sort(monsters.begin(), monsters.end(), [](p a, p b) {
+            if (a.first != b.first)
+                return a.first < b.first;
+            return a.second > b.second;
+        });
 
-        unordered_map<int, int> freq;
-        for (int i=0; i<n-1; i++) {
-            for (int j=0; j<n; j++) {
-                freq[seq[j][i]] += n-i;
+        ll total_damage=0, curr_attack = k;
+
+        for (int i=0; i<n; i++) {
+
+            // effect of last attack
+            if (i > 0)
+                curr_attack -= monsters[i].first;
+
+            // kill the monster
+            while(monsters[i].second > total_damage && curr_attack > 0) {
+                total_damage += curr_attack;
+
+                if (monsters[i].second > 0)
+                    curr_attack -= monsters[i].first;
             }
+
+            if (curr_attack <= 0)
+                break;
         }
 
-        vector<pair<int, int>> ans(n+1);
-        for (int i=1; i<=n; i++)
-            ans[i] = {freq[i], i};
-        sort(ans.begin(), ans.end());
-
-        for (int i=n; i>=1; i--)
-            cout << ans[i].second << " ";
-        cout << endl;
+        if (monsters[n-1].second > total_damage) cout <<"NO\n";
+        else cout << "YES\n";
     }
 }

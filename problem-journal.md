@@ -2,6 +2,20 @@
 
 ## Brute force, Math, Implementation (1000-1200)
 
+### B. Incinerate 🐦‍🔥
+
+We have follow attacks:
+- reduce health of all monsters by k, health[i] -= k
+- after attach, k reduces by power of weakeast monseter, k -= power[i]
+
+Can he kill all monsters before k reaches to 0?
+
+-----
+
+**One Piece of information 🧩**
+- Sort by power, so that we don't have to search for weakest alive monster's power level.
+- Keep track of total_damage and curr_attack power.
+
 ### C. Premutation 🦋
 
 **One piece of information 🧩**
