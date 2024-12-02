@@ -8,6 +8,8 @@ This repository is my problem solving journal. Will contain the learnings gained
 - Are difficult for your (and/or)
 - Help you learn a new topic.
 
+Where - Leetcode (Usage)
+
 **During Practice:**
 - Give yourself ~30 minutes **of being stuck** before reading editorial.
 - If you do need the editorial, read it bit-by-bit and process it

@@ -1,5 +1,38 @@
 # Problem Journal
 
+### 3356. Zero Array Transformation II 💌💌
+
+Two ways:
+1. using **segment trees** - range update (associative, commutative) and range query (max query).
+    - After applying initial k queries, if Max of (1, n) <= 0, then k is answer. `O(m * log(n))`
+
+2. **Binary Search** - binary search over k and use the previous question methods to check if became zero array.
+    - Binary search tells how many initial queries to consider `log(m)`
+    - Prefix sum method tells whether the array became zero array after applying mid queries. `O(n)`
+
+ ```cpp
+vector<int> ps(n+1, 0);
+for (int i=0; i<k; i++) {
+    ps[queries[i][0]] += queries[i][2];
+    ps[queries[i][1]+1] -= queries[i][2];
+}
+ ```
+
+### 3355. Zero Array Transformation I 💌
+
+**One Piece of Information**
+- Keep track of active queries with the help of frequency array.
+
+```cpp
+vector<int> ps(n+1, 0);
+for (auto query : queries) {
+    ps[query[0]]++;
+    ps[query[1]+1]--;
+}
+```
+
+You can call this prefix sum trick or sweep lines algorithm
+
 ## Brute force, Math, Implementation (1000-1200)
 
 ### B. Incinerate 🐦‍🔥
