@@ -1,5 +1,25 @@
 # Problem Journal
 
+### 3362. Zero Array Transformation III 💌💌💌
+
+**Using max heap**
+
+**One Piece of Information**
+- We need to know the candidate queries (`queries[j][0] <= i`)
+- We use the candidate who has farthest ending point, `mxHeap.top()`;
+- Use cur and psum to track the currently active queries. 
+
+```cpp
+cur += psum[i]
+
+// later
+while(cur < nums[i]) {
+    psum[mxHeap.top() + 1]--;
+    mxHeap.pop();
+    cur++;
+}
+```
+
 ### 3356. Zero Array Transformation II 💌💌
 
 Two ways:
@@ -13,8 +33,8 @@ Two ways:
  ```cpp
 vector<int> ps(n+1, 0);
 for (int i=0; i<k; i++) {
-    ps[queries[i][0]] += queries[i][2];
-    ps[queries[i][1]+1] -= queries[i][2];
+    ps[l] += val;
+    ps[r+1] -= val;
 }
  ```
 
@@ -32,6 +52,32 @@ for (auto query : queries) {
 ```
 
 You can call this prefix sum trick or sweep lines algorithm
+
+### 3351. Sum of Good Subsequences 🧧
+
+Using DP - 1D array.
+
+**One Piece of Information**
+- Use 1D array and DP.
+- `count[x] += count[x-1] + count[x+1] + 1`
+- `sum[x] += (sum[x-1] + sum[x+1] + x * (count[x-1] + count[x+1] + 1))`
+
+Well, I identified the formula myself.
+
+### 3350. Adjacent Increasing Subarrays Detection II 🕵🏽‍♀️
+
+#### Using Binary search 🔍
+
+**One Piece of Information**
+
+- Create incremental array to check if good.
+- Use binary search to maximize k.
+
+#### Using 2 pointers 2️⃣
+
+**One Piece of information**
+- Track the length of previous and current increasing sequence length.
+- No need to try any k, `ans = max(ans, prev/2, min(prev, cur))`
 
 ## Brute force, Math, Implementation (1000-1200)
 
@@ -82,8 +128,6 @@ for(ll i = 1; i<=l; i*=a){
     }
 }
 ```
-
-
 
 ### B. Collatz Conjecture 🥸
 
