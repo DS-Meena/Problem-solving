@@ -2,7 +2,31 @@
 
 This repository is my problem solving journal. Will contain the learnings gained from solving coding problems.
 
-## Daily Practice
+## CPP STL
+    
+## 🔄 Multiset Operations Guide
+
+Let's explore the powerful multiset container in C++ STL! 🚀 Want full explananation then check [GFG](https://www.geeksforgeeks.org/multiset-in-cpp-stl/).
+
+Key Differences:
+
+- 🎯 Set: Stores unique elements only
+- 📦 Multiset: Allows duplicate elements
+
+🛠️ Common Operations:
+
+| Method | Explanation | Time complexity | 
+| --- | --- | --- |
+| ms.erase(x) | 🗑️ Remove all occurrences of x | O(log(n)) |
+| ms.erase(ms.find(x)) | ✂️ Remove first occurrence of x | O(log(n)) |
+| ms.end() | ➡️ Returns an iterator to the theoretical element that follows the last element in the multiset. | O(1) |
+| ms.insert(x) | ➕ Insert element x (if duplicate then insert in last of range) | O(log(n)) |
+| ms.find(x) | 🔍 iterator to the lower bound of x | O(log(n)) |
+| *ms.begin() | Get smallest element | O(1) |
+| *ms.rbegin() | Get largest element | O(1) |
+
+
+# Daily Practice 💪🏽
 
 **Choose problems that:**
 - Are difficult for your (and/or)

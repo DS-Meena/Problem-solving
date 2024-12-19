@@ -79,6 +79,29 @@ Well, I identified the formula myself.
 - Track the length of previous and current increasing sequence length.
 - No need to try any k, `ans = max(ans, prev/2, min(prev, cur))`
 
+### 2762. Continuous Subarrays 🚉
+
+**One Piece of Information 🧩**
+- We are talking about subarrays, hence 2 pointer will be useful. For good subarrays do `ans += r-l+1;`.
+- I just need to know the min and max of current subarray.
+
+To know the min and max of current subarray, you can either use ` multiset<int>` or `map<int, int>` in cpp. 
+
+```cpp
+while(!ms.empty() && *ms.rbegin() - *ms.begin() > 2)
+    ms.erase(ms.find(nums[l++]));
+
+while(mp.rbegin()->first - mp.begin()->first > 2) {
+    mp[nums[l]]--;
+    if (mp[nums[l]] == 0) {
+        mp.erase(nums[l]);
+    }
+    l++;
+}
+```
+
+But map is more efficient because it can't grow more than 3 (size) while multiset can grow till `O(n)`.
+
 ## Brute force, Math, Implementation (1000-1200)
 
 ### B. Incinerate 🐦‍🔥
