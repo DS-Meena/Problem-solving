@@ -2,7 +2,7 @@
 
 ### 3395. Subsequences with a Unique Middle Mode I 📳
 
-This problem is solved using combinatrics and frequency map.
+This problem is solved using combinatrics and frequency map. Instead of counting pairs every time, use frequency and nCr formula. This reduces time complexity from `O(n^3)` to `O(n^2)`.
 
 **One Piece of Information 🧩**
 - Use map and combinatrics to find the number of pairs with required frequency of mode.
@@ -26,6 +26,44 @@ ans = (ans + (l * otherL) * (r * otherR)) % mod;
 // 2 frequency: (1, 0), (0, 1) 
 // Understand again
 ```
+
+### 3394. Check if Grid can be Cut into Sections ⏹️
+
+Solved using Sweep line algorithm.
+
+**One Piece of Information 🧩**
+- We can check one by one (first horizontally then vertically), to draw lines.
+- Instead of considering rectangles, use either horizontal (x coordinates) or vertical (y coordinates) lines at a time.
+
+```cpp
+int startx = rectangles[i][0], endx = rectangles[i][2];
+points.push_back({startx, 1});
+points.push_back({endx, -1});
+```
+
+### 3393. Count Paths With the Given XOR Value 💝
+
+Solved using 3D DP. Using `int dp[305][305][32];` works.
+
+**One Piece of Information 🧩**
+- At max XOR value can go till 31. Hence, we can track the ways to get possible xor values (not alone k).
+
+```cpp
+ for (int x=0; x<=31; x++) {
+    int xr = x ^ grid[i][j];
+
+    // comoing from up and down (with x as previous xor)
+    dp[i][j][xr] = (dp[i][j][xr] + dp[i-1][j][x]) % mod;
+    dp[i][j][xr] = (dp[i][j][xr] + dp[i][j-1][x]) % mod;
+}
+```
+
+### 3392. Count Subarrays of Length Three With a Condition ⚖️
+
+Solved using Sliding window algorithm.
+
+**One Piece of Information 🧩**
+- The constraints are small, we can check every subarray.
 
 ### 3362. Zero Array Transformation III 💌💌💌
 
@@ -157,6 +195,17 @@ c = d;
 `dp[i] = cost[i] + min(dp[i-1], dp[i-2])`
 
 It can be easily implemented using variables.
+
+### 740. Delete and Earn 🌾
+
+**One Piece of Information 🧩**
+- You can also use map as dp structure. 
+- Count the frequency of elements to know total value of each number. 
+
+```cpp
+for (int i=2; i<= 20005; i++)
+    dp[i] = i * freq[i] + max(dp[i-2], dp[i-3]);
+```
 
 ### 509. Fibonacci Number 🔢
 
