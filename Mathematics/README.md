@@ -5,6 +5,36 @@ Sum of AP:
 
 $sum = \frac{len}{2} * (\text{first term} + \text{last term})$
 
+## Combinatrics 🪮
+
+The nCr formula, also known as the binomial coefficient, is used to calculate the number of ways to choose r elements from a set of n elemetns without regard to the order of selection. The formula is given by:
+
+$\binom{n}{r} = \frac{n!}{r!(n-r)!}$
+
+where:
+
+- n = total number of items
+- r = number of items being chosen
+- ! denotes factorial
+
+**Special conditions 👓**
+1. If `r>n`: then nCr is 0, you can't choose more elements than are available.
+2. If `r == 0` or `r == n`: The value of nCr is 1.
+3. If `r = 1`: The value of nCr is n because there are n ways to choose one element from n elements.
+
+```cpp
+ll nCr(ll n, int r) {
+    if (n < r) return 0;
+    if (r == 0 || r == n) return 1;
+    if (r == 1) return n;
+
+    // r == 2 (count ways to choose pairs)
+    return ((n * (n-1))/2) % mod;  // comes from formulae
+
+    // other ways, you code
+}    
+```
+
 ## Number Theory 
 
 To make x % y == 0, we need to add following value to x:

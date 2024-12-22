@@ -1,10 +1,37 @@
 # Problem Journal
 
+### 3395. Subsequences with a Unique Middle Mode I 📳
+
+This problem is solved using combinatrics and frequency map.
+
+**One Piece of Information 🧩**
+- Use map and combinatrics to find the number of pairs with required frequency of mode.
+
+l = frequency of mode on left side, r = frequency of mode on right side,
+otherL = number of elements other than mode on left side, otherR = number of elements other than mode on right side
+
+```cpp
+// 5 frequency: (2, 2)
+ans = (ans + ncr(l, 2) * ncr(r, 2)) % mod;
+
+// 4 frequency: (2, 1), (1, 2)
+ans = (ans + ncr(l, 2) * (r * otherR)) % mod;
+ans = (ans + (l * otherL) * ncr(r,2)) % mod;
+
+// 3 frequency: (2, 0), (0, 2), (1, 1)
+ans = (ans + ncr(l, 2) * ncr(otherR, 2)) % mod;
+ans = (ans + ncr(otherL, 2) * ncr(r, 2)) % mod;
+ans = (ans + (l * otherL) * (r * otherR)) % mod;
+
+// 2 frequency: (1, 0), (0, 1) 
+// Understand again
+```
+
 ### 3362. Zero Array Transformation III 💌💌💌
 
 **Using max heap**
 
-**One Piece of Information**
+**One Piece of Information 🧩**
 - We need to know the candidate queries (`queries[j][0] <= i`)
 - We use the candidate who has farthest ending point, `mxHeap.top()`;
 - Use cur and psum to track the currently active queries. 
@@ -40,7 +67,7 @@ for (int i=0; i<k; i++) {
 
 ### 3355. Zero Array Transformation I 💌
 
-**One Piece of Information**
+**One Piece of Information 🧩**
 - Keep track of active queries with the help of frequency array.
 
 ```cpp
@@ -57,7 +84,7 @@ You can call this prefix sum trick or sweep lines algorithm
 
 Using DP - 1D array.
 
-**One Piece of Information**
+**One Piece of Information 🧩**
 - Use 1D array and DP.
 - `count[x] += count[x-1] + count[x+1] + 1`
 - `sum[x] += (sum[x-1] + sum[x+1] + x * (count[x-1] + count[x+1] + 1))`
@@ -68,14 +95,14 @@ Well, I identified the formula myself.
 
 #### Using Binary search 🔍
 
-**One Piece of Information**
+**One Piece of Information 🧩**
 
 - Create incremental array to check if good.
 - Use binary search to maximize k.
 
 #### Using 2 pointers 2️⃣
 
-**One Piece of information**
+**One Piece of information 🧩**
 - Track the length of previous and current increasing sequence length.
 - No need to try any k, `ans = max(ans, prev/2, min(prev, cur))`
 
@@ -101,6 +128,67 @@ while(mp.rbegin()->first - mp.begin()->first > 2) {
 ```
 
 But map is more efficient because it can't grow more than 3 (size) while multiset can grow till `O(n)`.
+
+### 2461. Maximum Sum of Distinct Subarrays With Length K 🪟
+
+Solved using sliding window and hash map.
+
+**One Piece of Information 🧩**
+- Length of subarray is fixed, hence we can use sliding window.
+- To check if all elements in window are distinct track the frequency of window elements.
+
+### 1137. N-th Tribonacci Number 🔢
+
+**One Piece of Information 🧩**
+- Same as Fibonacci number problem, using variables `d = a + b + c`.
+
+```cpp
+int d = a + b + c;
+a = b;
+b = c;
+c = d;
+```
+
+### 746. Min Cost Climbing Stairs 👛
+
+**One Piece of Information 🧩**
+- DP pattern, depends on last two variables.
+
+`dp[i] = cost[i] + min(dp[i-1], dp[i-2])`
+
+It can be easily implemented using variables.
+
+### 509. Fibonacci Number 🔢
+
+**One Piece of Information 🧩**
+- The next Fibonacci number depends only on last two numbers. hence c = a + b.
+
+```cpp
+int c = a + b;
+a = b;
+b = c;
+```
+
+### 198. House Robber 🏚️
+
+**One Piece of Information 🧩**
+- 2D DP array can be used to track the state values.
+- After DP, it can be easily converted into variables.
+
+```cpp
+int tmp = notRob;
+
+notRob = max(rob, notRob);
+rob = nums[i] + tmp;
+```
+
+### 70. Climbing Stairs 🪜
+
+The generic formulas for this is `dp[i] = dp[i-1] + dp[i-2] + ... + dp[i-k]`
+
+**One Piece of Information 🧩**
+- I just need to know the value of `ways[i-1]` and `ways[i-2]` values.
+
 
 ## Brute force, Math, Implementation (1000-1200)
 
