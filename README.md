@@ -60,3 +60,5 @@ Where - Leetcode (Usage)
 3. You must reach 300 Accepts!
 4. Participate in all CF Contests! Especially Div 3.
 5. Read the codes of other people.
+
+# I will become red coder in 2025.
