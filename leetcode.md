@@ -1,6 +1,6 @@
 # Leetcode Problems
 
-### 3395. Subsequences with a Unique Middle Mode I 📳
+## 3395. Subsequences with a Unique Middle Mode I 📳
 
 This problem is solved using combinatrics and frequency map. Instead of counting pairs every time, use frequency and nCr formula. This reduces time complexity from `O(n^3)` to `O(n^2)`.
 
@@ -27,7 +27,7 @@ ans = (ans + (l * otherL) * (r * otherR)) % mod;
 // Understand again
 ```
 
-### 3394. Check if Grid can be Cut into Sections ⏹️
+## 3394. Check if Grid can be Cut into Sections ⏹️
 
 Solved using Sweep line algorithm.
 
@@ -41,7 +41,7 @@ points.push_back({startx, 1});
 points.push_back({endx, -1});
 ```
 
-### 3393. Count Paths With the Given XOR Value 💝
+## 3393. Count Paths With the Given XOR Value 💝
 
 Solved using 3D DP. Using `int dp[305][305][32];` works.
 
@@ -58,14 +58,14 @@ Solved using 3D DP. Using `int dp[305][305][32];` works.
 }
 ```
 
-### 3392. Count Subarrays of Length Three With a Condition ⚖️
+## 3392. Count Subarrays of Length Three With a Condition ⚖️
 
 Solved using Sliding window algorithm.
 
 **One Piece of Information 🧩**
 - The constraints are small, we can check every subarray.
 
-### 3362. Zero Array Transformation III 💌💌💌
+## 3362. Zero Array Transformation III 💌💌💌
 
 **Using max heap**
 
@@ -85,7 +85,7 @@ while(cur < nums[i]) {
 }
 ```
 
-### 3356. Zero Array Transformation II 💌💌
+## 3356. Zero Array Transformation II 💌💌
 
 Two ways:
 1. using **segment trees** - range update (associative, commutative) and range query (max query).
@@ -103,7 +103,7 @@ for (int i=0; i<k; i++) {
 }
  ```
 
-### 3355. Zero Array Transformation I 💌
+## 3355. Zero Array Transformation I 💌
 
 **One Piece of Information 🧩**
 - Keep track of active queries with the help of frequency array.
@@ -118,7 +118,7 @@ for (auto query : queries) {
 
 You can call this prefix sum trick or sweep lines algorithm
 
-### 3351. Sum of Good Subsequences 🧧
+## 3351. Sum of Good Subsequences 🧧
 
 Using DP - 1D array.
 
@@ -129,22 +129,22 @@ Using DP - 1D array.
 
 Well, I identified the formula myself.
 
-### 3350. Adjacent Increasing Subarrays Detection II 🕵🏽‍♀️
+## 3350. Adjacent Increasing Subarrays Detection II 🕵🏽‍♀️
 
-#### Using Binary search 🔍
+### Using Binary search 🔍
 
 **One Piece of Information 🧩**
 
 - Create incremental array to check if good.
 - Use binary search to maximize k.
 
-#### Using 2 pointers 2️⃣
+### Using 2 pointers 2️⃣
 
 **One Piece of information 🧩**
 - Track the length of previous and current increasing sequence length.
 - No need to try any k, `ans = max(ans, prev/2, min(prev, cur))`
 
-### 2762. Continuous Subarrays 🚉
+## 2762. Continuous Subarrays 🚉
 
 **One Piece of Information 🧩**
 - We are talking about subarrays, hence 2 pointer will be useful. For good subarrays do `ans += r-l+1;`.
@@ -167,7 +167,7 @@ while(mp.rbegin()->first - mp.begin()->first > 2) {
 
 But map is more efficient because it can't grow more than 3 (size) while multiset can grow till `O(n)`.
 
-### 2461. Maximum Sum of Distinct Subarrays With Length K 🪟
+## 2461. Maximum Sum of Distinct Subarrays With Length K 🪟
 
 Solved using sliding window and hash map.
 
@@ -175,7 +175,7 @@ Solved using sliding window and hash map.
 - Length of subarray is fixed, hence we can use sliding window.
 - To check if all elements in window are distinct track the frequency of window elements.
 
-### 1137. N-th Tribonacci Number 🔢
+## 1137. N-th Tribonacci Number 🔢
 
 **One Piece of Information 🧩**
 - Same as Fibonacci number problem, using variables `d = a + b + c`.
@@ -187,7 +187,14 @@ b = c;
 c = d;
 ```
 
-### 746. Min Cost Climbing Stairs 👛
+## 931. Minimum Falling Path Sum 🍂
+
+**One Piece of Information**
+
+- You can directly store the results in matrix itself.
+- Check the value of j in each row, to not go out of bounds.
+
+## 746. Min Cost Climbing Stairs 👛
 
 **One Piece of Information 🧩**
 - DP pattern, depends on last two variables.
@@ -196,7 +203,7 @@ c = d;
 
 It can be easily implemented using variables.
 
-### 740. Delete and Earn 🌾
+## 740. Delete and Earn 🌾
 
 **One Piece of Information 🧩**
 - You can also use map as dp structure. 
@@ -207,7 +214,7 @@ for (int i=2; i<= 20005; i++)
     dp[i] = i * freq[i] + max(dp[i-2], dp[i-3]);
 ```
 
-### 509. Fibonacci Number 🔢
+## 509. Fibonacci Number 🔢
 
 **One Piece of Information 🧩**
 - The next Fibonacci number depends only on last two numbers. hence c = a + b.
@@ -218,7 +225,7 @@ a = b;
 b = c;
 ```
 
-### 198. House Robber 🏚️
+## 198. House Robber 🏚️
 
 **One Piece of Information 🧩**
 - 2D DP array can be used to track the state values.
@@ -231,7 +238,19 @@ notRob = max(rob, notRob);
 rob = nums[i] + tmp;
 ```
 
-### 70. Climbing Stairs 🪜
+## 120. Triangle 🔺
+
+**One Piece of Information**
+- At each cell of every row, we can check if `(j==0)` or `(j==i)` to fill accordingly.
+- To optimize space, you can store the results in triangle itself. Then space complexity becomes`O(1)`.
+
+```cpp
+if (j == 0) dp[i].push_back(dp[i-1][j]);
+else if (j == i) dp[i].push_back(dp[i-1][j-1]);
+else dp[i].push_back(min(dp[i-1][j], dp[i-1][j-1])); 
+```
+
+## 70. Climbing Stairs 🪜
 
 The generic formulas for this is `dp[i] = dp[i-1] + dp[i-2] + ... + dp[i-k]`
 
