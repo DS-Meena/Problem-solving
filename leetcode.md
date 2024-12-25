@@ -214,6 +214,20 @@ for (int i=2; i<= 20005; i++)
     dp[i] = i * freq[i] + max(dp[i-2], dp[i-3]);
 ```
 
+## 516. Longest Palindromic Subsequence 🪗
+
+Here, we have to find the length of the subsequence.The base case for both problems above is L==1, in that set [i][j] equal to true or 1.
+
+**One Piece of Information**
+- Solved using the Length, start point and end point algorithm.
+
+```cpp
+if (L==2) 
+	len[i][j]=(s[i]==s[j])?2:1; 
+else  
+	len[i][j] = (s[i]==s[j]) ? (2+len[i+1][j-1]) : max(len[i+1][j], len[i][j-1]);
+```
+
 ## 509. Fibonacci Number 🔢
 
 **One Piece of Information 🧩**
@@ -224,6 +238,13 @@ int c = a + b;
 a = b;
 b = c;
 ```
+
+## 221. Maximal Square 🐿️
+
+It can be easily solved by DP, you just need to know the state transition.
+
+**One Piece of Information**
+- State transition is `dp[i][j] = 1 + min(dp[i-1][j], dp[i-1][j-1], dp[i][j-1])`
 
 ## 198. House Robber 🏚️
 
@@ -283,3 +304,24 @@ It is solved using 2D DP.
 **One Piece of Information 🧩**
 
 - The state transition is easily identifiable. `dp[i][j] = dp[i-1][j] + dp[i][j-1]`
+
+## 5. Longest Palindromic Substring 🤲🏽
+
+`dp[i][j] = true`, if substring(i, j) is palindromic. This is solved using the length, start point and end point algorithm. This is used in many problems.
+
+**One Piece of Information**
+- Use the Length, start point and end point algorithm.
+
+```cpp
+for (int L=2; L<=n; L++) {  // Length
+
+    for (int i=0; i<n-L+1; i++) {   // start of string
+        int j = i+L-1;      // end of string
+        
+        if (L==2)
+            palin[i][j] = (s[i] == s[j]);
+        else 
+            palin[i][j] = (s[i] == s[j] && palin[i+1][j-1]);
+    }
+}
+```
