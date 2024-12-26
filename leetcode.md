@@ -271,6 +271,14 @@ else if (j == i) dp[i].push_back(dp[i-1][j-1]);
 else dp[i].push_back(min(dp[i-1][j], dp[i-1][j-1])); 
 ```
 
+## 72. Edit Distance 🫛
+
+This is solved by strings style DP.
+
+**One Piece of Information**
+- Use `dp[i][j]` to represent the min moves required to convert i length of word1 into j length of word2.
+- If `word1[i-1] != word2[j-1]` then we can do insertion, deletion and substitution that is represented by `mn[i][j] = 1 + min(mn[i-1][j], mn[i][j-1], mn[i-1][j-1])`.
+
 ## 70. Climbing Stairs 🪜
 
 The generic formulas for this is `dp[i] = dp[i-1] + dp[i-2] + ... + dp[i-k]`

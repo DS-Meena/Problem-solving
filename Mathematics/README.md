@@ -1,6 +1,8 @@
 
 # Mathematics ➗
 
+There is a common trick in problems of the form "count something on segment [l,r]": calculate the answer for [0,r], and then subtract the answer for [0,l−1].
+
 Sum of AP:
 
 $sum = \frac{len}{2} * (\text{first term} + \text{last term})$

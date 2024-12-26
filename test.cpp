@@ -4,45 +4,43 @@ using namespace std;
 #define ll long long
 #define p pair<int, int>
 
+ll maxEarningsGivenPrice(vector<int>& ar, vector<int>& br, int price, int k) {
+    int n = ar.size();
+
+    // for every price - i just need (number of trees bought, number of negative reviews)
+
+    ll trees_sold = lower_bound(br.begin(), br.end(), price) - br.begin();
+    ll pos_reviews = lower_bound(ar.begin(), ar.end(), price) - ar.begin();
+    trees_sold = n - trees_sold;
+    pos_reviews = n - pos_reviews;
+
+    if (trees_sold - pos_reviews <= k)
+        return price * trees_sold;
+    return 0;
+}
+
 int main() {
     
     int t; cin >> t;
     while(t-->0) {
 
-        int n, k; 
-        cin >> n >> k;
+        int n, k; cin >> n >> k;
+        vector<int> ar(n), br(n);
+        for (int i=0; i<n; i++) cin >> ar[i];
+        for (int i=0; i<n; i++) cin >> br[i];
 
-        vector<p> monsters(n);
-        for (int i=0; i<n; i++) cin >> monsters[i].second;
-        for (int i=0; i<n; i++) cin >> monsters[i].first;
+        sort(ar.begin(), ar.end());
+        sort(br.begin(), br.end());
 
-        sort(monsters.begin(), monsters.end(), [](p a, p b) {
-            if (a.first != b.first)
-                return a.first < b.first;
-            return a.second > b.second;
-        });
-
-        ll total_damage=0, curr_attack = k;
-
+        // I have 2n prices to check
+        ll mx = 0;
         for (int i=0; i<n; i++) {
-
-            // effect of last attack
-            if (i > 0)
-                curr_attack -= monsters[i].first;
-
-            // kill the monster
-            while(monsters[i].second > total_damage && curr_attack > 0) {
-                total_damage += curr_attack;
-
-                if (monsters[i].second > 0)
-                    curr_attack -= monsters[i].first;
-            }
-
-            if (curr_attack <= 0)
-                break;
+            mx = max(mx, maxEarningsGivenPrice(ar, br, ar[i], k));
+        }
+        for (int i=0; i<n; i++) {
+            mx = max(mx, maxEarningsGivenPrice(ar, br, br[i], k));
         }
 
-        if (monsters[n-1].second > total_damage) cout <<"NO\n";
-        else cout << "YES\n";
+        cout << mx << endl;
     }
 }

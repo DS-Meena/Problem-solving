@@ -1,8 +1,81 @@
 # Problem Journal
 
-## Brute force, Math, Implementation (1000-1200)
+# Codeforces Round 995 (Div. 3) 🎄
 
-### B. Incinerate 🐦‍🔥
+## 2051A - Preparing for the Olympiad
+
+It can be easily solved by implementation.
+
+**One Piece of Information**
+- Train on ith day if `a[i] - b[i+1] > 0`, otherwise skip.
+
+## 2051B - Journey
+
+This also can be easily solved by implementation.
+
+**One Piece of Information**
+- Instead of checking one by one, do `days = n // (a+b+c) * 3`.
+- Process the mod separately.
+
+```cpp
+day = n/(a+b+c) * 3;
+
+int rem = n%(a+b+c)
+if (rem == 0) return day;
+else if (rem - a <= 0) return day+1;
+else if (rem - (a+b) <= 0) return day+2;
+return day+3;
+```
+
+## 2051C - Preparing for the Exam
+
+We are given a answer list and a set of questions (missing questions are mentioned). Total n questions are present in syllabus.
+
+**One Piece of Information**
+- If answer list's `size < n-1`, then he can't pass any exam.
+- If answer list's `size == n`, then he can pass any exam.
+- For other cases, If the missing question on question list, is also missing from answer list then he will pass. Otherwise, fail.
+
+To check, if current question is also missing from answer list - I can use set or boolean array.
+
+```cpp
+if (present[ques[i]] == 0) cout << "pass";
+```
+
+## 2051D - Counting Pairs
+
+We have to find number of interesting pairs. On removing intersting pair, `x <= remaining array sum <= y`. 
+
+1. Brute force -> check all pairs. `O(n^2)`. Too slow.
+
+### Some Maths
+
+On solving the equations we get, `a[j] <= total - a[i] - x (large)` && `a[j] >= total - a[i] - y (small)`. Hence for each a[i], we need to find numbers that lies between [small, large].
+
+**One piece of Information**
+- There is a common trick in problems of the form "count something on segment [l,r]": calculate the answer for [0,r], and then subtract the answer for [0,l−1]. 💖💖
+
+```cpp
+// [0, large] - [0, small-1]
+ll r = upper_bound(a.begin(), a.end(), large) - a.begin();
+ll l = upper_bound(a.begin(), a.end(), small-1) - a.begin();
+
+ans += r-l;
+
+// if i==j also satisfies the condition
+if (small <= a[i] && a[i] <= large) ans--;
+```
+
+## 2051E - Best Price
+
+**One Piece of Information**
+- We only need to check 2n prices, as given in array `a` and `b`.
+- To calcualte earnings - find number of sold trees. `price <= b[i]` 
+- To check if valid price - find number of negative reviews. `sold_trees - positive_reviews`, in positive review `price <= a[i]`
+
+# Brute force, Math, Implementation (1000-1200)
+
+## B. Incinerate 🐦‍🔥
 
 We have follow attacks:
 - reduce health of all monsters by k, health[i] -= k
@@ -16,7 +89,7 @@ Can he kill all monsters before k reaches to 0?
 - Sort by power, so that we don't have to search for weakest alive monster's power level.
 - Keep track of total_damage and curr_attack power.
 
-### C. Premutation 🦋
+## C. Premutation 🦋
 
 **One piece of information 🧩**
 - Every column has some rank associated with it. First comers (column wise) are values more.
