@@ -73,6 +73,39 @@ if (small <= a[i] && a[i] <= large) ans--;
 - To calcualte earnings - find number of sold trees. `price <= b[i]` 
 - To check if valid price - find number of negative reviews. `sold_trees - positive_reviews`, in positive review `price <= a[i]`
 
+## 2051F - Joker
+
+Wow, I solved this myself.
+
+How does joker position changes, cases:
+1. pos < joker: new positions are `{joker, joker-1}`;
+2. pos > joker: new positions are `{joker, joker+1}`;
+3. pos == joker: new positions are `{1, n}`;
+
+**One Piece of Information**
+- There are only few ways in which the position of jocker changes.
+- Instead of checking all positions one by one, handle them in intervals.
+- You can use auxillary set to update the intervals. 🤗
+- You can use stack to merge the intervals. 🤗
+
+```cpp
+for (auto& it : intervals) {
+    if (it.first > pos) {
+        updated.insert({it.first-1, it.second});
+    } 
+    else if (it.second < pos) {
+        updated.insert({it.first, it.second+1});
+    }
+    else {
+        // tricky part
+        if (it.first != pos) updated.insert({it.first, pos});
+        if (it.second != pos) updated.insert({pos, it.second});
+        updated.insert({1, 1});
+        updated.insert({n, n});
+    }
+}
+```
+
 # Brute force, Math, Implementation (1000-1200)
 
 ## B. Incinerate 🐦‍🔥

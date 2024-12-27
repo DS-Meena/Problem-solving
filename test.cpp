@@ -4,43 +4,71 @@ using namespace std;
 #define ll long long
 #define p pair<int, int>
 
-ll maxEarningsGivenPrice(vector<int>& ar, vector<int>& br, int price, int k) {
-    int n = ar.size();
-
-    // for every price - i just need (number of trees bought, number of negative reviews)
-
-    ll trees_sold = lower_bound(br.begin(), br.end(), price) - br.begin();
-    ll pos_reviews = lower_bound(ar.begin(), ar.end(), price) - ar.begin();
-    trees_sold = n - trees_sold;
-    pos_reviews = n - pos_reviews;
-
-    if (trees_sold - pos_reviews <= k)
-        return price * trees_sold;
-    return 0;
-}
 
 int main() {
     
     int t; cin >> t;
     while(t-->0) {
 
-        int n, k; cin >> n >> k;
-        vector<int> ar(n), br(n);
-        for (int i=0; i<n; i++) cin >> ar[i];
-        for (int i=0; i<n; i++) cin >> br[i];
+        int n, m, q;
+        cin >> n >> m >> q;
 
-        sort(ar.begin(), ar.end());
-        sort(br.begin(), br.end());
+        set<p> intervals = {{m, m}};
 
-        // I have 2n prices to check
-        ll mx = 0;
-        for (int i=0; i<n; i++) {
-            mx = max(mx, maxEarningsGivenPrice(ar, br, ar[i], k));
+        while(q-->0) {
+
+            int pos; cin >> pos;
+
+            set<p> updated;
+
+            // update the intervals
+            for (auto& it : intervals) {
+                
+                if (it.first > pos) {
+                    updated.insert({it.first-1, it.second});
+                } 
+                else if (it.second < pos) {
+                    updated.insert({it.first, it.second+1});
+                }
+                else {
+                    // tricky part
+                    if (it.first != pos) updated.insert({it.first, pos});
+                    if (it.second != pos) updated.insert({pos, it.second});
+                    updated.insert({1, 1});
+                    updated.insert({n, n});
+                }
+            }
+
+            // merge the intervals (assertion: set is already sorted)
+            stack<p> stk;
+            for (auto& it : updated) {
+                // cout << it.first << " " << it.second << endl;
+                if (stk.empty() || stk.top().second < it.first) {
+                    stk.push({it.first, it.second});
+                } 
+                else {
+                    p top = stk.top();
+                    stk.pop();
+                    top.first = min(top.first, it.first);
+                    top.second = max(top.second, it.second);
+                    stk.push(top);
+                }
+            }
+
+            // count distinct positions
+            int distinct_positions = 0;
+            intervals = {};
+            while(!stk.empty()) {
+                p top = stk.top(); 
+                stk.pop();
+                intervals.insert(top);
+
+                distinct_positions += top.second - top.first + 1;
+                // cout << top.first << " " << top.second << endl;
+            }
+
+            cout << distinct_positions << " "; // << endl;
         }
-        for (int i=0; i<n; i++) {
-            mx = max(mx, maxEarningsGivenPrice(ar, br, br[i], k));
-        }
-
-        cout << mx << endl;
+        cout << endl;
     }
 }
