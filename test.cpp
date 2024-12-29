@@ -4,71 +4,25 @@ using namespace std;
 #define ll long long
 #define p pair<int, int>
 
+const int INF = int(1e9);
 
 int main() {
     
     int t; cin >> t;
     while(t-->0) {
+        int n, x, y;
+        cin >> n >> x >> y;
+        x--; y--;
 
-        int n, m, q;
-        cin >> n >> m >> q;
+        int dist = y-x;
 
-        set<p> intervals = {{m, m}};
+        vector<int> a(n);
+        for (int i=0; i<n; i++) a[(x+i) % n] = i%2;
 
-        while(q-->0) {
+       if (n%2 || dist%2 == 0)
+            a[x] = 2;
 
-            int pos; cin >> pos;
-
-            set<p> updated;
-
-            // update the intervals
-            for (auto& it : intervals) {
-                
-                if (it.first > pos) {
-                    updated.insert({it.first-1, it.second});
-                } 
-                else if (it.second < pos) {
-                    updated.insert({it.first, it.second+1});
-                }
-                else {
-                    // tricky part
-                    if (it.first != pos) updated.insert({it.first, pos});
-                    if (it.second != pos) updated.insert({pos, it.second});
-                    updated.insert({1, 1});
-                    updated.insert({n, n});
-                }
-            }
-
-            // merge the intervals (assertion: set is already sorted)
-            stack<p> stk;
-            for (auto& it : updated) {
-                // cout << it.first << " " << it.second << endl;
-                if (stk.empty() || stk.top().second < it.first) {
-                    stk.push({it.first, it.second});
-                } 
-                else {
-                    p top = stk.top();
-                    stk.pop();
-                    top.first = min(top.first, it.first);
-                    top.second = max(top.second, it.second);
-                    stk.push(top);
-                }
-            }
-
-            // count distinct positions
-            int distinct_positions = 0;
-            intervals = {};
-            while(!stk.empty()) {
-                p top = stk.top(); 
-                stk.pop();
-                intervals.insert(top);
-
-                distinct_positions += top.second - top.first + 1;
-                // cout << top.first << " " << top.second << endl;
-            }
-
-            cout << distinct_positions << " "; // << endl;
-        }
+        for (int i=0; i<n; i++) cout << a[i] << " ";
         cout << endl;
     }
 }

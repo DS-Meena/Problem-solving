@@ -61,3 +61,28 @@ for(int i = 1; i < m; i++) {
 - Pay attention to initialization of first row and column
 - Consider whether diagonal elements are needed for your recurrence
 - Space optimization possible by using only two rows of memory
+
+# Bitmask dp pattern
+
+```cpp
+// dp[i][j] = minium cell on which we can place jth snake (snakes present are i (bit format))
+vector<vector<int>> dp(1<<n, vector<int>(n, INF));
+for (int i=0; i<n; i++)
+    dp[1<<i][i] = 1;
+
+for (int mask=1; mask<(1<<n); mask++) {
+    for (int lst=0; lst<n; lst++) {
+
+        if (dp[mask][lst] == INF)
+            continue;
+        
+        for (int nxt=0; nxt<n; nxt++) {
+            if (mask & (1<<nxt))
+                continue;
+
+            int nmask = mask | (1<<nxt);
+            dp[nmask][nxt] = min(dp[nmask][nxt], dp[mask][lst] + minDist[lst][nxt]);
+        }
+    }
+}
+```

@@ -1,5 +1,46 @@
 # Problem Journal
 
+# Codeforces Round 994 (Div. 2) 🎆
+
+## 2049A - MEX Destruction 
+
+**One Piece of Information**
+- First remove 0's from both ends, then it's easy to solve.
+- There are 3 cases to check.
+
+```cpp
+while(!a.empty() && a.back() == 0)
+    a.pop_back();
+reverse(a.begin(), a.end());
+// repeat
+```
+
+## 2049B - pspspsps
+
+**One Piece of Information**
+- If $s_n$ is p, then set $s_n$ as `.` and if $s_1$ is s, then set $s_1$ as `.`.
+- In the middle, both s and p can not exist simultaneously.
+
+## 2049C - MEX Cycle
+
+This can be solved if you try the possible cases:
+- Case 1: Even number of people.
+    - Distance (y-x) is odd 
+    - Distance is even
+- Case 2: Odd number of people
+    - Distance is odd
+    - Distance is even.
+
+**One Piece of Information**
+- $a_i=mex(a_{f_1},a_{f_2},…,a_{f_k})$ means $a_i$ will have that his friends doesn't have.
+- You just need to satisfy the friends (adjacent, some extra (x-y)).
+
+```cpp
+for (int i=0; i<n; i++) a[(x+i) % n] = i%2;
+if (n%2 || (y-x)%2 == 0)
+    a[x] = 2;
+```
+
 # Codeforces Round 995 (Div. 3) 🎄
 
 ## 2051A - Preparing for the Olympiad
@@ -105,6 +146,28 @@ for (auto& it : intervals) {
     }
 }
 ```
+
+## 2051G - Snakes
+
+`dp[bitmask][j]` = minimum cell on which we can place jth snake, placed snakes are represented using bitmask (including jth snake) 🐍
+
+**One Piece of Information**
+- First find, minimum distance required between ith and jth snakes.
+- To handle the snake position permutation, use bitmask dp. Here, bitmask will represent all the snakes placed till now. `dp[1<<i][i] = 1;`
+
+```cpp
+for (int nxt=0; nxt<n; nxt++) {
+    if (mask & (1<<nxt))
+        continue;
+
+    int nmask = mask | (1<<nxt);  // nmask after placing nxt snake
+    dp[nmask][nxt] = min(dp[nmask][nxt], dp[mask][lst] + minDist[lst][nxt]);
+}
+
+ ans = min(ans, dp[(1<<n) - 1][i] + enlarge[i]);
+```
+
+time: O(1<<n * n^2)
 
 # Brute force, Math, Implementation (1000-1200)
 

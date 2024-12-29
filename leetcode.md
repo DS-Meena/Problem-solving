@@ -214,6 +214,16 @@ for (int i=2; i<= 20005; i++)
     dp[i] = i * freq[i] + max(dp[i-2], dp[i-3]);
 ```
 
+## 712. Minimum ASCII Delete Sum for Two Strings
+
+dp[i][j] = minimum ascii delete sum required to convert i length of string1 into j length of string2.
+
+`dp[i][j] = min(ascii(string1[i-1]) + dp[i-1][j], ascii(string2[j-1]) + dp[i][j-1])`;
+
+**One Piece of Information**
+- String style dp pattern should work here.
+- If `s1[i-1] != s2[j-1]`, try deleting last character from both sides.
+
 ## 516. Longest Palindromic Subsequence 🪗
 
 Here, we have to find the length of the subsequence.The base case for both problems above is L==1, in that set [i][j] equal to true or 1.
