@@ -8,21 +8,39 @@ const int INF = int(1e9);
 
 int main() {
     
-    int t; cin >> t;
+    int t=1; // cin >> t;
     while(t-->0) {
-        int n, x, y;
-        cin >> n >> x >> y;
-        x--; y--;
+        int n, k; 
+        cin >> n >> k;
+        
+        vector<int> ar(n);
+        for (int i=0; i<n; i++) cin >> ar[i];
 
-        int dist = y-x;
+        double global_mx=0;
+        
+        // all window sizes
+        for (double size=k; size<= n; size++) {
 
-        vector<int> a(n);
-        for (int i=0; i<n; i++) a[(x+i) % n] = i%2;
+            // first window
+            double sum = 0;
+            for (int i=0; i<size; i++)
+                sum += ar[i];
+            
+            double local_mx= sum/size;
 
-       if (n%2 || dist%2 == 0)
-            a[x] = 2;
+            // other windows
+            for (int i=size; i<n; i++) {
+                sum -= ar[i-size];
+                sum += ar[i];
 
-        for (int i=0; i<n; i++) cout << a[i] << " ";
-        cout << endl;
+                double curr = sum/size;
+                if (curr > local_mx) local_mx = curr;
+            }
+
+            if (local_mx > global_mx)
+                global_mx = local_mx;
+        }
+
+        cout << std::fixed << std::setprecision(7) << global_mx << endl;
     }
 }

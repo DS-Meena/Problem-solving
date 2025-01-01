@@ -281,6 +281,25 @@ else if (j == i) dp[i].push_back(dp[i-1][j-1]);
 else dp[i].push_back(min(dp[i-1][j], dp[i-1][j-1])); 
 ```
 
+## 115. Distinct Subsequences 🚉
+
+Problem was to count subsequences which are equal to string t. Started with recursion then converted into a DP solution.
+
+dp[i][j] = number of subsequences equal to string[0....j]
+
+base case: `dp[i][0] = 1`
+
+state transition (memoization helped in this):
+
+`dp[i][j] = dp[i-1][j]`
+
+`if (s[i-1] == t[j-1])  dp[i][j] += dp[i-1][j-1];`
+
+**One Piece of Information**
+- When not able to write dp state transition, start with recursion -> Memoization -> Iterative DP.
+- Intermediate results can give interger overflow, even if mentioned final answer fits in 32-bit integer. To avoid this use mod.
+- From previous row, we only need `dp[i-1][j]` and `dp[i-1][j-1]` value. Hence, if we store `dp[i-1][j-1]` in prev variable then it can be converted into 1D dp solution.
+
 ## 72. Edit Distance 🫛
 
 This is solved by strings style DP.

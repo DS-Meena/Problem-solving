@@ -41,6 +41,21 @@ if (n%2 || (y-x)%2 == 0)
     a[x] = 2;
 ```
 
+## 2049D - Shift + Esc
+
+**One Piece of Information**
+- Write as `g(i, j, x)` helped in writing state transition.
+- `g(i, j, x)` min cost to reach to cell(i, j).
+- If n==20, then in dp algorithms, it's mostly a 3D dp solution.
+
+```bash
+# moving horizontally
+g(i, j, x) = g(i, j-1, x) + cell(i, (j+x)%n) 
+
+# moving vertically
+g(i, j, x) = g(i-1, j, y) + cell(i, j)
+```
+
 # Codeforces Round 995 (Div. 3) 🎄
 
 ## 2051A - Preparing for the Olympiad
