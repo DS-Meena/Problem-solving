@@ -2,7 +2,7 @@
 
 In this page, we will see some of the generic style DP patterns, that are used to solve many problems. Remember these are just patterns, when and how to use them depends on you. 💪🏽
 
-# Fibonacci Style
+# Fibonacci Style 🤘
 
 These problems follow a pattern where each state depends on one or more previous states, similar to how fibonacci numbers work.
 
@@ -61,6 +61,65 @@ for(int i = 1; i < m; i++) {
 - Pay attention to initialization of first row and column
 - Consider whether diagonal elements are needed for your recurrence
 - Space optimization possible by using only two rows of memory
+
+# String Style DP Problems 🧵
+
+Common patterns in string-based dynamic programming problems:
+
+- **State Definition:** Usually `dp[i][j]` represents solution for substrings of length i and j
+- **Transition:** Often involves checking if characters match and taking max/min of different possibilities
+- **Base Cases:** Usually involve empty strings or single characters
+
+Common techniques with example code:
+
+### Two String pattern 💑
+
+Compare/match two strings character by character (like LCS, Edit Distance)
+
+```cpp 
+// Base cases - empty string
+for(int i = 0; i <= m; i++) dp[i][0] = i;
+for(int j = 0; j <= n; j++) dp[0][j] = j;
+
+// Fill dp table
+for(int i = 1; i <= m; i++) {
+    for(int j = 1; j <= n; j++) {
+        if(word1[i-1] == word2[j-1])
+            dp[i][j] = dp[i-1][j-1];
+        else
+            dp[i][j] = 1 + min({dp[i-1][j], dp[i][j-1], dp[i-1][j-1]});
+    }
+}
+```
+
+### Single String Pattern 👲
+
+Find properties within one string (like palindrome, substring problems)
+
+```cpp
+// Base cases - single chars are palindromes
+for(int i = 0; i < n; i++) 
+    dp[i][i] = true;
+
+// Check all possible lengths
+for(int len = 2; len <= n; len++) {
+    for(int start = 0; start < n-len+1; start++) {
+        int end = start + len - 1;
+        
+        if(len == 2)
+            dp[start][end] = (s[start] == s[end]);
+        else
+            dp[start][end] = (s[start] == s[end]) && dp[start+1][end-1];
+    }
+}
+```
+
+Key points to remember:
+
+1. Initialize base cases properly (empty strings, single characters)
+2. Consider all possible operations at each step
+3. Use previous computed results efficiently
+4. Handle edge cases separately
 
 # Bitmask dp pattern
 

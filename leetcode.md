@@ -249,6 +249,27 @@ a = b;
 b = c;
 ```
 
+## 300. Longest Increasing Subsequence
+
+**One piece of information**
+
+- Length increases only if we get largest till now.
+- For smaller elements we greedily put them in the middle of our sequence.
+
+```cpp
+for (int i=1;i<n;i++) {
+    if (nums[i]<tail[0])
+        tail[0]=nums[i];
+    else if (nums[i]>tail[len-1]) {
+        tail[len++]=nums[i];
+    }
+    else {
+        int lb = lower_bound(begin(tail), begin(tail)+len, nums[i])-begin(tail);
+        tail[lb]=nums[i];
+    }
+}
+```
+
 ## 221. Maximal Square 🐿️
 
 It can be easily solved by DP, you just need to know the state transition.

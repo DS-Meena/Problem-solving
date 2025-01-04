@@ -10,37 +10,21 @@ int main() {
     
     int t=1; // cin >> t;
     while(t-->0) {
-        int n, k; 
-        cin >> n >> k;
-        
-        vector<int> ar(n);
-        for (int i=0; i<n; i++) cin >> ar[i];
+        int n; cin >> n;
+        vector<string> text(n);
+        for (int i=0; i<n; i++)
+            cin >> text[i];
 
-        double global_mx=0;
-        
-        // all window sizes
-        for (double size=k; size<= n; size++) {
+        for (int start=0; start<n; start++) {
+            string cur="";
 
-            // first window
-            double sum = 0;
-            for (int i=0; i<size; i++)
-                sum += ar[i];
-            
-            double local_mx= sum/size;
+            for (int i=start; i<n; i++) {
+                cur += text[i];
 
-            // other windows
-            for (int i=size; i<n; i++) {
-                sum -= ar[i-size];
-                sum += ar[i];
-
-                double curr = sum/size;
-                if (curr > local_mx) local_mx = curr;
+                // search in next substring
+                
             }
 
-            if (local_mx > global_mx)
-                global_mx = local_mx;
-        }
-
-        cout << std::fixed << std::setprecision(7) << global_mx << endl;
+        }    
     }
 }
