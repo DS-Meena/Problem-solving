@@ -1,5 +1,156 @@
 # Problem Journal
 
+# Codeforces Round #494 (Div. 3)
+
+3 solved during virtual contest and 3 by upsolving.
+
+## 1003A - Polycarp's Pockets
+
+Solved using hash map.
+
+**One Piece of Information**
+- We need at max k pockets, where k = max frequency of an element.
+
+## 1003B - Binary String Constructing
+
+I solved by first creating a string containing only '0' or '1'. Then x/2 times added '0' or '1' in the middle with spacing.
+
+**One Piece of Information**
+- Instead of finding, I tried creating the string.
+- Start with basic structure then incorporate the other details.
+
+```cpp
+string s = string(n, l);  // l can be '0' or '1'
+
+// last piece
+if (x%2==1) {  // increase by 1  (00000111)
+    for (int i=n-b; i<n; i++) s[i]=r;
+} else {      // increase by 0    (00001111000)
+    for (int i=lst+1; i<=lst+b; i++) s[i] = r;
+}
+```
+
+## 1003C - Intense Heat
+
+Time limit was enough to use a `O(n^2)` solution.
+
+**One Piece of Information**
+- Try all window sizes and use sliding window algorithm.
+
+## 1003D - Coins and Queries
+
+I solved it by counting the available coin types (bit positions). Then Greedily tried to decrease sum by iterating from 31st bit to 0th bit of sum.
+
+I solved it myself at 1600 problem.
+
+**One Piece of Information**
+- `log2(x)` gives the only set bit position in x.
+- 1 x set bit can be consumed by 2 x-1 set bit coins. 
+- While coming down, double the requirements of set bits (or coins).
+
+```cpp
+for (int b=31; b>=0; b--) {
+ 
+    if (x & (1<<b))
+        cur++;
+    
+    // use the 2^b coins
+    if (cur > 0 && freq[b] > 0) {
+        ans += min(cur, freq[b]);
+        cur = max(0, cur-freq[b]);
+    }
+
+    // requirement doubles when goes down
+    cur *= 2;
+}
+```
+
+## 1003E - Tree Constructing
+
+Graph problem. I got the structure of problem, but got TLE because didn't used set to track free vertices.
+
+**Free vertex:**
+- where degree < k
+- farthest leaf node distance < d 
+
+If above conditions satisfy then adding one more vertex at this node, won't ruin our structure.
+
+Note -> On adding a new node at free vertex, the distance from any free vertex to farthest leaf node does not changes because we never increases the diameter of tree.
+
+**One Piece of information**
+- Start creating from the basic structure. Create d+1 nodes long tree.
+- Using set track all the free vertices, where we can add a new vertex. [Mistake: I tried using DFS]
+- Update set after adding each new vertex (old node might not be valid now, add new node).
+
+```cpp
+// add other vertices
+for (int i=d+2; i<=n; i++) {
+    
+    if (!freeVertices.empty()) {    
+        p v = *freeVertices.begin();
+        freeVertices.erase(freeVertices.begin());
+
+        tree[v.second].push_back(i);
+        tree[i].push_back(v.second);
+
+        // enter new free vertex (mistake)
+        if (v.first+1<d)
+            freeVertices.insert({v.first+1, i});
+
+        // old node (mistake)
+        if (tree[v.second].size() < k)
+            freeVertices.insert(v);
+    } else {
+        cout << "NO\n";
+        return 0;
+    }
+}
+```
+
+## 1003F - Abbreviation
+
+Solving using DP and using L length algorithm.
+
+What we need to solve problem -> Try all equal segments and to know their (should not overlap each other and equal)
+
+`dp[i][j]` = length of longest equal segment starting at i and j
+```cpp
+vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
+for (int i=n-1; i>=0; i--) {
+    for (int j=n-1; j>=0; j--) {
+        if (text[i] == text[j])
+            dp[i][j] = 1 + dp[i+1][j+1];
+    }
+}
+```
+
+**One Piece of information**
+- Use dp to check if segment starting at i and j are equal or not.
+- Use L length algorithm, to check all starting position and all length equal segmetns. Count the number of equal segments also.
+
+```cpp
+for (int i=0; i<n; i++) {
+    for (int L=1; L<= n; L++) {
+        int j = i+L, cnt=1;
+
+        while (j<n) {
+            if (dp[i][j] >= L) {  // equal segment
+                cnt++;
+                j += L;
+            } else 
+                j++;                  
+        }
+    }
+}
+```
+
+time: `O(n^3)`
+
+---
+---
+# 2025
+---
+
 # Codeforces Round 994 (Div. 2) 🎆
 
 ## 2049A - MEX Destruction 
