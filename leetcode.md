@@ -224,6 +224,44 @@ dp[i][j] = minimum ascii delete sum required to convert i length of string1 into
 - String style dp pattern should work here.
 - If `s1[i-1] != s2[j-1]`, try deleting last character from both sides.
 
+## 673. Number of Longest Increasing Subsequence
+
+Solved using the LIS style dp pattern.
+
+**One Piece of Information**
+- In the LIS vector, I need to maintain two things **{longest LIS ending here, number of ways to get this LIS}**.
+
+```cpp
+if (lis[i].first < lis[j].first + 1)
+    lis[i] = {lis[j].first + 1, lis[j].second};    // first time getting lis
+
+else if (lis[i].first == lis[j].first + 1)   // found another way
+    lis[i].second += lis[j].second;
+```
+
+## 646. Maximum Length of Pair Chain
+
+Solved using LIS algorithm in O(n^2) time.
+
+**One Piece of Information**
+- Use the LIS algorithm after sorting the pairs.
+
+### Greedy
+
+Solved using Greedy algorithm in O(n) time with O(1) space.
+
+**One Piece of Information**
+- Sort pairs by end value.
+- Keep track of end value in current chain.
+
+```cpp
+ // good chain pair
+if (pairs[i][0] > end) {
+    end = pairs[i][1];
+    len++;
+}
+```
+
 ## 516. Longest Palindromic Subsequence 🪗
 
 Here, we have to find the length of the subsequence.The base case for both problems above is L==1, in that set [i][j] equal to true or 1.

@@ -6,51 +6,57 @@ using namespace std;
 
 const int INF = int(1e9);
 
+map<ll, int> dp[20][20];
+
+ll grid[20][20];
+ll half, ans, m, n, k;
+
+void recurseFront(int x, int y, int val, int cnt) {
+    val ^= grid[x][y];
+
+    if (cnt == half) {
+        ++dp[x][y][val];
+        return;
+    }
+    
+    if (x+1 < m)
+        recurseFront(x+1, y, val, cnt+1);
+    if (y+1 < n)
+        recurseFront(x, y+1, val, cnt+1);
+}
+
+void recurseBack(int x, int y, int val, int cnt) {
+
+    if (cnt == n + m - 2 - half) {
+        if (dp[x][y].count(k^val) > 0) {
+            ans += dp[x][y][k^val];
+            return;
+        }
+    }
+
+    val ^= grid[x][y];
+
+    if (x > 0)
+        recurseBack(x-1, y, val, cnt+1);
+    if (y > 0)
+        recurseBack(x, y-1, val, cnt+1);
+}
+
 int main() {
     
     int t=1; // cin >> t;
     while(t-->0) {
-        int n; cin >> n;
+        cin >> m >> n >> k;
 
-        int totalLength = n-1;   // spaces
-        vector<string> text(n);
-        for (int i=0; i<n; i++) {
-            cin >> text[i];
-            totalLength += text[i].length();
+        for (int i=0; i<m; i++) {
+            for (int j=0; j<n; j++)
+                cin >> grid[i][j];
         }
 
-        // equal segments starting at i and j
-        vector<vector<int>> dp(n+1, vector<int>(n+1, 0));
-        for (int i=n-1; i>=0; i--) {
-            for (int j=n-1; j>=0; j--) {
-                if (text[i] == text[j])
-                    dp[i][j] = 1 + dp[i+1][j+1];
-            }
-        }
+        half = (n + m - 2) / 2;
 
-        int ans=totalLength;
-        for (int i=0; i<n; i++) {
-            for (int L=1; L<= n; L++) {
-                int j = i+L, cnt=1;
-
-                // count equal segments
-                while (j<n) {
-                    if (dp[i][j] >= L) {
-                        cnt++;
-                        j += L;
-                    } else 
-                        j++;                  
-                }
-
-                // calculate segmentLength
-                int segLen=L-1;
-                for (int k=i; k<i+L; k++) segLen += text[k].length();
-
-                if (cnt>=2) {
-                    ans = min(ans, totalLength - cnt*segLen + cnt*L);
-                }  
-            }
-        }
+        recurseFront(0, 0, 0, 0);
+        recurseBack(m-1, n-1, 0, 0);
 
         cout << ans << endl;
     }

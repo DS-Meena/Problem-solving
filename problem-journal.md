@@ -1,5 +1,120 @@
 # Problem Journal
 
+# Codeforces Round #498 (Div. 3)
+
+3 solved during virtual contest and 2 by upsolving.
+
+## 1006A - Adjacent Replacements
+
+Found the pattern, that odd values remains same and even value reduces by 1.
+
+**One Piece of information**
+- We always go increasing, hence x and x-1 will not be updated again. But x+1 will be updated again.
+
+## 1006B - Polycarp's Practice
+
+Solved using sorting, multiset and some implementation logic.
+
+**One Piece of Information**
+- We only care about the k largest values.
+- Store largest k values in multiset -> place separator after each of them.
+
+```cpp
+int prev=0;
+for (int i=0; i<n && k>1; i++) {
+    
+    // if one of the peaks, cut
+    if (peaks.find(ar[i]) != peaks.end()) {
+        cout << i - prev + 1 << " ";
+        prev = i+1;
+        peaks.erase(peaks.find(ar[i]));
+        k--;
+    }
+}
+cout << n-prev << endl;
+```
+
+## 1006C - Three Parts of the Array
+
+Solved using two pointers.
+
+**One Piece of Information**
+- Start i pointer from 0 and j pointer from n-1.
+- Track maximum segment sum, which satisfies sum1 == sum3.
+
+```cpp
+if (sum1 <= sum3) {
+    i++;
+    sum1 += ar[i];
+} else {
+    j--;
+    sum3 += ar[j];
+}
+```
+
+## 1006D - Two Strings Swaps
+
+I also got this idea and code structure, but couldn't check the conditions correctly.
+
+**One Piece of Information**
+- We only need to check the (a[i], b[i], a[n-1-i], b[n-1-i]) characters.
+- Count frequency and check few conditions.
+
+```cpp
+if (freq.size() == 4)   // check conditions using distinct characters count
+    ans += 2;
+else if (freq.size() == 3) 
+    ans += 1 + (a[i] == a[n-i-1]);   // pair in a
+else if (freq.size() == 2)
+    ans += freq[a[i]] != 2; // not a pair
+```
+
+## 1006E - Military Problem
+
+I implemented the O(h*q) [worst case: h = n] solution but it was giving TLE. Then used editorial to implement O(n+q) solution.
+
+**One Piece of Information**
+- Store the dfs path in a vector.
+- Store the start and end indices of every subtree (associated with a vertex).
+
+```cpp
+void dfs(int u, vector<int>& path, vector<p>& index) {
+ 
+    path.push_back(u);
+    index[u].first = path.size() - 1;    // in index
+ 
+    for (int v : graph[u]) {
+        dfs(v, path, index);
+    }
+ 
+    index[u].second = path.size();   // out index
+}
+```
+
+## 1006F - Xor-Paths
+
+Couldn't get AC even after using editorial. The idea used is simple, to reduce the depth of recursion from O(2^40) to O(2^20), we will use meet in the middle technique.
+
+**One Piece of Information**
+- We can't store all 10^18 values, hence will only store the visited xor values. `map<ll, int> dp[20][20];`
+- Do recursion from start and from the end.
+
+```cpp
+// from start
+val ^= a[x][y];
+if (cnt == half) {  // half way
+    ++v[x][y][val];
+    return;
+}
+
+// from end
+if (cnt == n + m - 2 - half) {
+    if (v[x][y].count(k ^ val))
+        ans += v[x][y][k ^ val];
+    return;
+}
+```
+
 # Codeforces Round #494 (Div. 3)
 
 3 solved during virtual contest and 3 by upsolving.
