@@ -6,58 +6,25 @@ using namespace std;
 
 const int INF = int(1e9);
 
-map<ll, int> dp[20][20];
-
-ll grid[20][20];
-ll half, ans, m, n, k;
-
-void recurseFront(int x, int y, int val, int cnt) {
-    val ^= grid[x][y];
-
-    if (cnt == half) {
-        ++dp[x][y][val];
-        return;
-    }
-    
-    if (x+1 < m)
-        recurseFront(x+1, y, val, cnt+1);
-    if (y+1 < n)
-        recurseFront(x, y+1, val, cnt+1);
-}
-
-void recurseBack(int x, int y, int val, int cnt) {
-
-    if (cnt == n + m - 2 - half) {
-        if (dp[x][y].count(k^val) > 0) {
-            ans += dp[x][y][k^val];
-            return;
-        }
-    }
-
-    val ^= grid[x][y];
-
-    if (x > 0)
-        recurseBack(x-1, y, val, cnt+1);
-    if (y > 0)
-        recurseBack(x, y-1, val, cnt+1);
-}
-
 int main() {
     
-    int t=1; // cin >> t;
+    int t=1; cin >> t;
     while(t-->0) {
-        cin >> m >> n >> k;
+        int n, m;
+        cin >> n >> m;
 
-        for (int i=0; i<m; i++) {
-            for (int j=0; j<n; j++)
-                cin >> grid[i][j];
+        bool ok = false;
+        for (int i=0; i<n; i++) {
+
+            int tile[2][2];
+            for (int r=0; r<2; r++) 
+                for (int c=0; c<2; c++)
+                    cin >> tile[r][c];
+
+            if (tile[0][1] == tile[1][0]) ok = true;
         }
 
-        half = (n + m - 2) / 2;
-
-        recurseFront(0, 0, 0, 0);
-        recurseBack(m-1, n-1, 0, 0);
-
-        cout << ans << endl;
+        if (ok && (m%2 == 0)) cout << "YES\n";
+        else cout << "NO\n";
     }
 }

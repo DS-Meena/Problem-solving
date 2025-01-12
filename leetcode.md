@@ -175,6 +175,37 @@ Solved using sliding window and hash map.
 - Length of subarray is fixed, hence we can use sliding window.
 - To check if all elements in window are distinct track the frequency of window elements.
 
+## 1964. Find the Longest Valid Obstacle Course at Each Position
+
+Solved it using the famous LIS algorithm - tail vector algorithm. Only change here is that it is a non-decreasing sequence (means == is good).
+
+**One Piece of Information**
+- Tail vector algorithm has same application - we do binary search find index and replace old number -> This index is our answer.
+
+```cpp
+if (tail.empty() || tail.back() <= obstacles[i]) {
+    tail.push_back(obstacles[i]);
+    ans.push_back(tail.size());
+} else {
+
+    int ub = upper_bound(tail.begin(), tail.end(), obstacles[i]) - tail.begin();
+    tail[ub] = obstacles[i];
+    
+    ans.push_back(ub+1);
+}
+```
+
+## 1218. Longest Arithmetic Subsequence of Given Difference
+
+Solved using DP. 
+
+map[x] = longest ap (fixed difference) ending with value x 
+
+`map[x] = max[x-difference] + 1`
+
+**One Piece of Information**
+- Difference is fixed, we only need to check of x-difference value or `lis[x-difference]`.
+
 ## 1137. N-th Tribonacci Number 🔢
 
 **One Piece of Information 🧩**
@@ -185,6 +216,25 @@ int d = a + b + c;
 a = b;
 b = c;
 c = d;
+```
+
+## 1027. Longest Arithmetic Subsequence
+
+Solved using the LIS algorithm.
+
+`lis[i][diff] = longest app ending here, with difference = diff`
+
+**One Piece of Information**
+- Use LIS algorithm, instead of checking difference -> store the result of each difference.
+
+```cpp
+for (int i=0;i<n;i++) {
+    for (int j=i+1;j<n;j++) {
+        int d=nums[j]-nums[i] + 1000;   // +1000 to componsate the -ve differences
+        
+        dp[j][d] = max(2, dp[i][d] + 1);
+    }
+}
 ```
 
 ## 931. Minimum Falling Path Sum 🍂
@@ -287,12 +337,32 @@ a = b;
 b = c;
 ```
 
+## 354. Russian Doll Envelopes
+
+Solved using the tail algorithm.
+
+**One Piece of Information**
+
+- Sort by width, then we can apply tail algorithm on height dimension.
+- For same width, sort in decreasing order of height. So that tail algorithm only counts it once.
+
+```cpp
+if (lis.empty() || lis.back() < h)  // increment lis
+    lis.push_back(h);  
+else {                              // replace old with smaller one's
+    int l = lower_bound(lis.begin(), lis.end(), h) - lis.begin();
+    lis[l] = h;
+}
+```
+
 ## 300. Longest Increasing Subsequence
+
+Solved using the tail algorithm. To understand better, do a dry run on example.
 
 **One piece of information**
 
-- Length increases only if we get largest till now.
-- For smaller elements we greedily put them in the middle of our sequence.
+- Length increases only if we get element greater than the tail [*which can change*].
+- For smaller elements, we greedily replace the old elements with smaller elements.
 
 ```cpp
 for (int i=1;i<n;i++) {

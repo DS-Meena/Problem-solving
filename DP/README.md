@@ -121,6 +121,60 @@ Key points to remember:
 3. Use previous computed results efficiently
 4. Handle edge cases separately
 
+# LIS (Longest increasing subsequence) Style DP Pattern 
+
+Idea – fix the ending points and find the longest increasing subsequence.
+
+lis[i] = longest increasing subsequence with arr[i] as ending point.
+
+```cpp
+vector lis(n, 1);
+
+for (int i = 1; i < n; i++) {
+    for (int j = 0; j < i; j++) {
+
+        if (a[j] < a[i])
+            lis[i] = max(lis[i], lis[j] + 1);
+    }
+}
+
+return *max_element(begin(lis), end(lis));
+```
+
+Complexity: 
+
+time = $O(n^2)$ and space = $O(n)$
+
+### Tail vector approach:
+
+Idea - Maintain a tail array where tail[i] represents the smallest possible value that can end an increasing subsequence of length i+1.
+
+```cpp
+vector<int> tail;
+
+for (int num : nums) {
+    // Find position to insert using binary search
+    auto it = lower_bound(tail.begin(), tail.end(), num);
+    
+    // If num is greater than all elements, append it
+    if (it == tail.end())
+        tail.push_back(num);
+    else
+        *it = num; // Replace the element at position
+}
+
+return tail.size();
+```
+
+Complexity: time = $O(n log (n))$ and space = $O(n)$
+
+Key points:
+
+- tail[i] represents smallest value that can end an increasing subsequence of length i+1
+- Binary search is used to find the position where current element should be placed
+- If current element is larger than all tail elements, append it
+- Otherwise, replace the smallest element that is ≥ current element
+
 # Bitmask dp pattern
 
 ```cpp
