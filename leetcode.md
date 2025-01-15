@@ -195,6 +195,46 @@ if (tail.empty() || tail.back() <= obstacles[i]) {
 }
 ```
 
+## 1312. Minimum Insertion Steps to Make a String Palindrome
+
+### 1st way: My way using dp
+
+Yeah, I know it's hard to directly write the state transition. But you can start from recrusion -> memoization -> dp.
+
+**One Piece of Information**
+- Start the i pointer from 0 and j pointer from end, then try to make it palindrome.
+- Use can pass Data structures using reference to reduce memory usage in function calls.
+
+```cpp
+int minMoves(int i, int j, string& s) {  // & to decrease memory usage
+    if (i >= j) return 0;
+    if (dp[i][j] != -1)
+        return dp[i][j];
+
+    if (s[i] == s[j])
+        return dp[i][j] = minMoves(i+1, j-1, s);
+
+    int a = minMoves(i+1, j, s);
+    int b = minMoves(i, j-1, s);
+    return dp[i][j] = min(a, b) + 1;
+}
+```
+
+### 2nd way: The editorial way
+
+**One Piece of Information**
+- The answer of the problem would be the length of `s` minus the length of the longest palindromic subsequence in `s`.
+- This can be easily space optimized by using 2 arrays instead of a matrix.
+
+Length of the longest palindromic subsequence = `LCS(s, s_reverse)`
+
+```cpp
+if (text1[i-1]==text2[j-1]) 
+    dp[j] = 1 + prev[j-1];    // directly converted from LCS algorithm
+else 
+    dp[j] = max(prev[j], dp[j-1]);
+```
+
 ## 1218. Longest Arithmetic Subsequence of Given Difference
 
 Solved using DP. 
@@ -205,6 +245,20 @@ map[x] = longest ap (fixed difference) ending with value x
 
 **One Piece of Information**
 - Difference is fixed, we only need to check of x-difference value or `lis[x-difference]`.
+
+## 1143. Longest Common Subsequence
+
+Solved using the LCS algorithm.
+
+**One Piece of Information**
+- Use LCS algorithm.
+
+```cpp
+if (a[i-1]==b[j-1])
+	dp[i][j] = 1 + dp[i-1][j-1]
+else
+    dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+```
 
 ## 1137. N-th Tribonacci Number 🔢
 
@@ -217,6 +271,13 @@ a = b;
 b = c;
 c = d;
 ```
+
+## 1035. Uncrossed Lines
+
+Solved using LCS.
+
+**One Piece of Information**
+- Maximum number of lines we can draw is equals to the LCS.
 
 ## 1027. Longest Arithmetic Subsequence
 

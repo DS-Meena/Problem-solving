@@ -175,6 +175,45 @@ Key points:
 - If current element is larger than all tail elements, append it
 - Otherwise, replace the smallest element that is ≥ current element
 
+# Longest Common Subsequence (LCS) Style DP pattern
+
+Idea – take strings of possible lengths and find LCS among them.
+
+dp[i][j] = LCS with i length of str1 and j length of str2.
+
+```cpp
+for (int i = 1; i <= m; i++) {
+    for (int j = 1; j <= n; j++) {
+
+    if (S1[i-1] == S2[j-1])
+        dp[i][j] = 1 + dp[i-1][j-1];
+    else
+       dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+    }
+}
+```
+
+Complexity:time = $O(n*m)$, space = $O(n*m)$
+
+Can be used to:
+
+1. Find longest common subsequence, [here](https://practice.geeksforgeeks.org/problems/longest-common-subsequence-1587115620/1).
+2. Find longest common substring, [here](https://practice.geeksforgeeks.org/problems/longest-common-substring1452/1)                                      – just set `dp[i][j] = 0` if not match and return max of dp[][]. 
+3. Find longest repeating subsequence, [here](https://practice.geeksforgeeks.org/problems/longest-repeating-subsequence2004/1#)                              – just to check complete overlapping, do `(i != j && str[i-1] == str[j-1])`. 
+4. Find longest repeating substring, [here](https://leetcode.com/problems/longest-repeating-substring/).                                    – similar to 3rd, just set d`p[i][j] = 0` if not match and return max of dp[][].
+5. Find minimum distance between str1 and str2, [here](https://practice.geeksforgeeks.org/problems/edit-distance3702/1).     – just in case of empty string set, op=length of other string.
+
+Just change the if/else conditions according to your requirements.
+
+Space optimized version of above structure:
+
+```cpp
+if (text1[i-1]==text2[j-1]) 
+    dp[j] = 1 + prev[j-1];
+else 
+    dp[j] = max(prev[j], dp[j-1]);
+```
+
 # Bitmask dp pattern
 
 ```cpp
