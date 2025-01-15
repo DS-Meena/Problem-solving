@@ -1,5 +1,105 @@
 # Problem Journal
 
+# Codeforces Round #674 (Div. 3)
+
+I was able to solve 5 questions myself (within allotted time). and F solved during upsolving.
+
+## 1426A - Floor Number
+
+It is a simple math's problem.
+
+```cpp
+if (n <= 2) cout << "1\n";
+else cout << (n+x-3) / x + 1 << endl;
+```
+
+## 1426B - Symmetric Matrix
+
+Just need to check one condition.
+
+**One Piece of Information**
+- If there exists a symmetric tile, then we can create a symmetric square.
+
+## 1426C - Increase and Copy
+
+This took a little extra time, I knew binary search will be used but was consfused about how many increment and how many append operations to do.
+
+**One Piece of Information**
+- We will greedily do all increment operations first, after that do append operations.
+- If we are given x operations, then best strategy is to divide equally for increment and append operations [*Required for binary search*].
+- Binary search over total number of operations required.
+
+```cpp
+bool good(int n, int total) {
+ 
+    int x = (total+1) / 2;
+    int y = total/2;
+ 
+    return ((x+1) * (y+1)) >= n;
+}
+
+int lo=0, hi=1;
+while(!good(n, hi)) hi *= 2;     // without this was giving more answer
+```
+
+## 1426D - Non-zero Segments
+
+I solved it using set (to check if found a 0 segment sum). My idea is to insert +INF before last number of zero subsegment. 
+
+**One Piece of Information**
+- The sum of the segment $[l;r]$ is zero if $p_r−p_{l−1}$ is zero (in other words, $p_l−1=p_r$), where $p_i$ is the sum of the first i elements ($p_0=0$).
+- I can also add +INF, to make sure numbers before +INF can't be used by later numbers.
+
+```cpp
+// insert inf and start new set (& subsegment)
+if (sums.find(cur) != sums.end() || cur == 0) {
+    ans++;
+    cur = ar[i];
+    sums.clear();
+} 
+```
+
+## 1426E - Rock, Paper, Scissors
+
+**One Piece of Information**
+- The maximum number of rounds Alice can win is pretty easy to calculate greedily: $min(a_1,b_2)+min(a_2,b_3)+min(a_3,b_1)$.
+- To get minimum number of wins, she must either lose or draw using the available operations.
+
+```cpp
+ll mxWin = min(ar, bs) + min(as, bp) + min(ap, br);
+
+// min win
+// consume ar
+// consume as
+// consume ap
+
+// using remaining ar, as, ap
+ll mnWin = min(ar, bs) + min(as, bp) + min(ap, br);
+```
+
+## 1426F - Number of Subsequences
+
+I couldn't solve this problem by myself, have to see the solution.
+
+$dp_{i,j,k}$ as the number of subsequences of s that end up in position not later than i, match j first characters of abc and contain k question marks.
+
+**One Piece of Information**
+- For every such subsequence, the number of strings containing it is $3^k−q^{Pos(pa,pb,pc)}$, where $q^{Pos(pa,pb,pc)}$ is the number of positions from pa,pb,pc that contain a question mark.
+
+```cpp
+dp[0][0][0] = 1;
+
+// not matches
+dp[i+1][j][k] = add(dp[i+1][j][k], dp[i][j][k]);
+
+// matches
+if (j < 3 && (s[i] == '?' || s[i]-'a' == j)) {
+    int nk = (s[i] == '?') ? k + 1 : k;
+
+    dp[i+1][j+1][nk] = add(dp[i+1][j+1][nk], dp[i][j][k]);
+}
+```
+
 # Codeforces Round #498 (Div. 3)
 
 3 solved during virtual contest and 2 by upsolving.
