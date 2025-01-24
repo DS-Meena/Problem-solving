@@ -325,6 +325,22 @@ for (int i=2; i<= 20005; i++)
     dp[i] = i * freq[i] + max(dp[i-2], dp[i-3]);
 ```
 
+## 714. Best Time to Buy and Sell Stock with Transaction Fee
+
+Solved using DP, like other buy and sell stock problems.
+
+**One Piece of Information**
+- It's easy after identifying the state transition.
+
+```cpp
+for (int i=1; i<n; i++) {
+    buy[i] = max(buy[i-1], sell[i-1] - prices[i]);
+    sell[i] = max(buy[i-1] + prices[i] - fee, sell[i-1]);
+}
+```
+
+You can easily remove the use of dp array, because it depends only on previous values.
+
 ## 712. Minimum ASCII Delete Sum for Two Strings
 
 dp[i][j] = minimum ascii delete sum required to convert i length of string1 into j length of string2.
@@ -416,6 +432,25 @@ else {                              // replace old with smaller one's
 }
 ```
 
+## 309. Best Time to Buy and Sell Stock with Cooldown
+
+Each element in each array represents the maximal profits that we could gain at the specific price point i with the specific state.
+
+**One Piece of Information**
+- Use 3 arrays for cooldown, sell, buy. Then It's easy to write state transitions.
+
+cool[i] = max profit if this is a cooldown time (no current buy)
+
+buy[i] = max profit if this is a buy time (buying ith stock)
+
+sell[i] = max profit if this is a sell time (selling current buy)
+
+```cpp
+cool[i] = max(cool[i-1], sell[i-1])
+buy[i] = max(buy[i-1], cool[i-1] - price[i])
+sell[i] = buy[i-1] + price[i]
+```
+
 ## 300. Longest Increasing Subsequence
 
 Solved using the tail algorithm. To understand better, do a dry run on example.
@@ -458,6 +493,36 @@ int tmp = notRob;
 notRob = max(rob, notRob);
 rob = nums[i] + tmp;
 ```
+
+## 188. Best Time to Buy and Sell Stock IV
+
+Solved using dp.
+
+**One Piece of Information**
+- We Just need to create k dimension dp array.
+
+```cpp
+buy[i][k] = max(buy[i-1][k], sell[i][k-1] - prices[i]);
+sell[i][k] = max(buy[i-1][k] + prices[i], sell[i-1][k]);
+```
+
+## 123. Best Time to Buy and Sell Stock III
+
+**One Piece of Information**
+- In the first transaction we can't use the previous sell profit (because there is no previous sell).
+- For other things, ith transaction uses ith transaction values.
+
+```cpp
+// first transaction
+buy[i][0] = max(buy[i-1][0], -prices[i]);   // can't use old sell
+sell[i][0] = max(buy[i-1][0] + prices[i], sell[i-1][0]);
+
+// second transaction
+buy[i][1] = max(buy[i-1][1], sell[i][0] - prices[i]);   // using old sell
+sell[i][1] = max(buy[i-1][1] + prices[i], sell[i-1][1]);
+```
+
+[Check My leetcode solution](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iii/solutions/6323614/intitutive-buy-and-sell-stock-solution-e-cg84/)
 
 ## 120. Triangle 🔺
 

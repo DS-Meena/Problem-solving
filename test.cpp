@@ -6,70 +6,91 @@ using namespace std;
 
 const int mod = int(1e9) + 7;
 
-int add(int x, int y) {
-    x += y;
-    while(x >= mod) x -= mod;
-    while(x < 0) x += mod;
-    return x;
+void input(vector<vector<int>>& adj, int m) {
+    for (int i=0; i<m; i++) {
+        int u, v; 
+        cin >> u >> v;
+        adj[u].push_back(v);
+    }
 }
 
-int mul(int x, int y) {
-    return (x * 1ll * y) % mod;
+int find(int i, vector<int>& par) {
+
+    while(par[i] != i) {
+        par[i] = par[par[i]];
+        i = par[i];
+    }
+    return i;
 }
 
-const int N = 200043;
-const int K = 4;
-int dp[N][K][K];
-int pow3[N];
+void merge(int a, int b, vector<int>& par, vector<int>& rank) {
+    a = find(a, par);
+    b = find(b, par);
+
+    if (a == b) return;
+
+    if (rank[a] > rank[b]) {
+        rank[a] += rank[b];
+        par[b] = a;
+    } else {
+        rank[b] += rank[a];
+        par[a] = b;
+    }
+}
 
 int main() {
     
-    int t=1; // cin >> t;
+    int t; 
+    cin >> t;
     while(t-->0) {
-        int n; 
-        cin >> n;
+        int n, m1, m2;
+        cin >> n >> m1 >> m2;
+
+        vector<vector<int>> adj1(n+1), adj2(n+1);
+        input(adj1, m1);
+        input(adj2, m2);
+
+        vector<int> par1(n+1), rank1(n+1, 1), par2(n+1), rank2(n+1, 1);
+        for (int i=1; i<=n; i++)
+            par1[i] = par2[i] = i;
+
+        for (int i=1; i<=n; i++)
+            for (int v : adj2[i]) merge(i, v, par2, rank2);
         
-        string s;
-        cin >> s;
 
-        // count of ? marks
-        int cnt=0;
-        for (auto c : s) 
-            if (c == '?') cnt++;
+        int ans = 0;
+        // remove operations
+        for (int i=1; i<=n; i++) {
+            
+            vector<int> safe;
+            for (int v : adj1[i]) {
 
+                // belong to different components
+                if (find(v, par2) != find(i, par2))
+                    ans++;
+                else 
+                    safe.push_back(v);
+            }
 
-        // power of 3's
-        pow3[0] = 1;
-        for (int i=1; i<N; i++)
-            pow3[i] = mul(pow3[i-1], 3);
+            adj1[i] = safe;
+        }
 
-        memset(dp, 0, sizeof(dp));
-        dp[0][0][0] = 1;
+        // now create dsu of F
+        for (int i=1; i<=n; i++)
+            for (int v : adj1[i]) merge(i, v, par1, rank1);
 
-        for (int i=0; i<n; i++) {
-            for (int j=0; j<=3; j++) {
+        // addition operations
+        for (int i=1; i<=n; i++) {
 
-                for (int k=0; k<=3; k++) {
+            for (int v : adj2[i]) {
 
-                    if (!dp[i][j][k]) continue;
-
-                    // not matches
-                    dp[i+1][j][k] = add(dp[i+1][j][k], dp[i][j][k]);
-
-                    // matches
-                    if (j < 3 && (s[i] == '?' || s[i]-'a' == j)) {
-                        int nk = (s[i] == '?') ? k + 1 : k;
-
-                        dp[i+1][j+1][nk] = add(dp[i+1][j+1][nk], dp[i][j][k]);
-                    }
+                // belong to different components
+                if (find(v, par1) != find(i, par1)) {
+                    ans++;
+                    merge(i, v, par1, rank1);
                 }
             }
         }
-
-        int ans = 0;
-        for (int i=0; i<=3; i++)
-            if (cnt >= i)
-                ans = add(ans, mul(dp[n][3][i], pow3[cnt - i]));
 
         cout << ans << endl;
     }
