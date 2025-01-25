@@ -1,5 +1,74 @@
 # Problem Journal
 
+# Codeforces Round #998 (Div. 3)
+
+I was able to solve 4 problems in the contest and 1 problem in upsolving.
+
+## 2060A - Fibonacciness
+
+There are only 3 possible values. [e-d, d-b, a+b]. Choose the value that gives maximum point.
+
+## 2060B - Farmer John's Card Game
+
+**One Piece of Information**
+- Track the cows that contributes to a specific mod.
+- One cow should contribute in one mod only.
+
+```cpp
+int mod = card % n;
+mods[mod].insert(i+1);
+
+// if same mod is present with multiple cows
+if (mods[mod].size() > 1) ok = false;
+```
+
+## 2060C - Game of Mathletes
+
+**One Piece of Information**
+- The move played by Alice doesn't matter.
+- Bob will get a point, whenever we find a pair.
+
+```cpp
+ll y = k - x;
+
+if (nums.find(y) != nums.end()) {
+    score++;
+    nums.erase(nums.find(y));
+} else {
+    nums.insert(x);
+}
+```
+
+## 2060D - Subtract Min Sort
+
+**One Piece of Information**
+- Try to make starting numbers zero. Apply the operation at every location.
+- In last check, if still not good.
+
+## 2060E - Graph Composition
+
+**One Piece of Information**
+- Use DSU to check if two vertices are connected or not [belong to same component].
+- First create the DSU for graph2, then iterate graph1 and remove the extra edges.
+- After removing extra edges create DSU for graph1, then iterate graph2 and add edges if required.
+
+```cpp
+for (int i=1; i<=n; i++) {
+    
+    vector<int> safe;
+    for (int v : adj1[i]) {
+
+        // belong to different components in DSU of graph2
+        if (find(v, par2) != find(i, par2))
+            ans++;
+        else 
+            safe.push_back(v);
+    }
+
+    adj1[i] = safe;
+}
+```
+
 # Codeforces Round #674 (Div. 3)
 
 I was able to solve 5 questions myself (within allotted time). and F solved during upsolving.
