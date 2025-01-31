@@ -555,6 +555,61 @@ state transition (memoization helped in this):
 - Intermediate results can give interger overflow, even if mentioned final answer fits in 32-bit integer. To avoid this use mod.
 - From previous row, we only need `dp[i-1][j]` and `dp[i-1][j-1]` value. Hence, if we store `dp[i-1][j-1]` in prev variable then it can be converted into 1D dp solution.
 
+## 96. Unique Binary Search Trees
+
+Problem is to count the number of unique BST for a given number of nodes.
+
+**One Piece of Information**
+- Try to go through the derivation of formula.
+
+$g(n)$ = number of unique BST using n nodes
+
+$f(i, n)$ = number of unique BST using n nodes and i as root node.
+
+$$g(n) = \sum_{i=1}^n f(i, n)$$
+
+**Ways to construct BST with i as root**
+
+$$f(i, n) = g(i-1) * g(n - i)$$
+
+where, left subtree has i-1 nodes and right subtree has n-i nodes.
+
+Combining both formulas gives us:
+
+$$g(n) = \sum_{i=1}^n g(i-1) * g(n-i)$$
+
+```cpp
+for (int i=2; i<=n; i++) {
+    for (int j=1; j<= i; j++)
+        dp[i] += dp[j-1] * dp[i-j];
+}
+```
+
+## 95. Unique Binary Search Trees II
+
+This is the alternate version of it's part. In this we have to return a list of all unique BST instead of just counting the number.
+
+**One Piece of Information**
+- Try to make `start <= i <= end` as root. Do same for left subtree (start, i-1) and right subtree (i+1, end).
+- For each i root, try the combination of possible left and right subtrees.
+- Each function call returns a list of BST.
+
+```cpp
+vector<TreeNode*> possibleLeftNodes = constructBST(start, i-1);
+vector<TreeNode*> possibleRightNodes = constructBST(i+1, end);
+
+for (int j=0; j<possibleLeftNodes.size(); j++) {
+    for (int k=0; k<possibleRightNodes.size(); k++) {
+
+        TreeNode* root = new TreeNode(i);
+        root->left = possibleLeftNodes[j];
+        root->right = possibleRightNodes[k];
+
+        ans.push_back(root);
+    }
+}
+```
+
 ## 72. Edit Distance 🫛
 
 This is solved by strings style DP.
